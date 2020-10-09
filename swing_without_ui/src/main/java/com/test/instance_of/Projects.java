@@ -1,22 +1,26 @@
-package com.test.model;
+package com.test.instance_of;
 
 import java.time.LocalDate;
 
-public class ProjectsDto {
+public class Projects {
 
-    public ProjectsDto() {
+    /**
+     * Constructor without arguments.
+     */
+
+    public Projects() {
     }
-
-    public ProjectsDto(Integer projectId, String description, LocalDate dateAdded, Integer countOfDevelopers) {
+    public Projects(Integer projectId, String description, LocalDate dateAdded) {
         this.projectId = projectId;
         this.description = description;
         this.dateAdded = dateAdded;
-        this.countOfDevelopers = countOfDevelopers;
     }
+
 
     /**
      * Project id.
      */
+
     private Integer projectId;
 
     /**
@@ -30,16 +34,11 @@ public class ProjectsDto {
 
     private LocalDate dateAdded;
 
-    /**
-     * Count of developers.
-     */
-    private Integer countOfDevelopers;
-
     public Integer getProjectId() {
         return projectId;
     }
 
-    public ProjectsDto setProjectId(Integer projectId) {
+    public Projects setProjectId(Integer projectId) {
         this.projectId = projectId;
         return this;
     }
@@ -48,7 +47,7 @@ public class ProjectsDto {
         return description;
     }
 
-    public ProjectsDto setDescription(String description) {
+    public Projects setDescription(String description) {
         this.description = description;
         return this;
     }
@@ -57,27 +56,17 @@ public class ProjectsDto {
         return dateAdded;
     }
 
-    public ProjectsDto setDateAdded(LocalDate dateAdded) {
+    public Projects setDateAdded(LocalDate dateAdded) {
         this.dateAdded = dateAdded;
-        return this;
-    }
-
-    public Integer getCountOfDevelopers() {
-        return countOfDevelopers;
-    }
-
-    public ProjectsDto setCountOfDevelopers(Integer countOfDevelopers) {
-        this.countOfDevelopers = countOfDevelopers;
         return this;
     }
 
     @Override
     public String toString() {
-        return "ProjectsDto{" +
+        return "Projects{" +
                 "projectId=" + projectId +
                 ", description='" + description + '\'' +
                 ", dateAdded=" + dateAdded +
-                ", countOfDevelopers=" + countOfDevelopers +
                 '}';
     }
 }

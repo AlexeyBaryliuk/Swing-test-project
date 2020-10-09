@@ -1,4 +1,4 @@
-package com.test.model;
+package com.test.instance_of;
 
 import javax.swing.table.DefaultTableModel;
 

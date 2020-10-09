@@ -1,19 +1,20 @@
 package com.test.panel;
 
-import com.test.date.DateTextField;
-import com.test.action_listener.ActionListenerDescription;
+import com.test.instance_of.DescriptionJDialog;
+import com.test.instance_of.DateTextField;
 import com.test.action_listener.ActionListenerFind;
 import com.test.editor.ButtonEditEditor;
-import com.test.model.MyTableModel;
-import com.test.model.ProjectsDto;
+import com.test.instance_of.MyTableModel;
+import com.test.instance_of.ProjectsDto;
 import com.test.renderer.ButtonEditRenderer;
+import com.test.renderer.RowRenderer;
 
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -40,13 +41,9 @@ public class ProjectsPanel extends JPanel {
     private JButton refresh;
     private JTable table;
     private JPanel footerPanel;
+    private ArrayList<ProjectsDto> projectsDtosTemp;
 
     public ProjectsPanel(){
-//        String[] columnNames ={"projectId","dateAdded","countOfDevelopers", "edit", "delete", "description"};
-//        Object[][] data = {{"1","12-03-2018", "1","edit","delete","description"}
-//                ,{"1","12-03-2018", "1","edit","delete","description"}
-//                ,{"1","12-03-2018", "1","edit","delete","description"}
-//        };
 
         northPanel = new JPanel();
         header = new JPanel();
@@ -55,10 +52,44 @@ public class ProjectsPanel extends JPanel {
         refresh = new JButton("Refresh");
         footerPanel = new JPanel();
         edit = new JButton();
+
         delete = new JButton();
-        delete.addActionListener(new ActionListenerDescription());
+        delete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+                
+            }
+        });
+
         description = new JButton();
-        description.addActionListener(new ActionListenerDescription());
+        description.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+int c = 0;
+                String description = null;
+                JPanel textPanel = new JPanel(new FlowLayout());
+                JLabel descriptionLable = new JLabel();
+                textPanel.add(descriptionLable);
+                int row = table.getSelectedRow();
+                int projectId = (int)table.getModel().getValueAt(row, 0);
+                System.out.println("ProjectId = " + projectId );
+                for (int i = 0; i < createObj().size(); i++) {
+                    if (createObj().get(i).getProjectId() == projectId){
+                        description =  createObj().get(i).getDescription();
+                        descriptionLable.setText(description);
+
+                        break;
+                    }
+                    System.out.println("count" + c);
+                    c++;
+                }
+
+                JDialog dialog = new DescriptionJDialog("Description", true);
+                dialog.add(textPanel);
+                dialog.setVisible(true);
+            }
+        });
 
         MyTableModel model = new MyTableModel();
 
@@ -69,13 +100,15 @@ public class ProjectsPanel extends JPanel {
         table.getColumn("edit").setCellEditor(new ButtonEditEditor(new JCheckBox(), edit));
 
         table.getColumn("delete").setCellRenderer(new ButtonEditRenderer());
-        table.getColumn("description").setCellRenderer(new ButtonEditRenderer());
+        table.getColumn("delete").setCellEditor(new ButtonEditEditor(new JCheckBox(),delete));
 
-
-            table.getColumn("delete").setCellEditor(new ButtonEditEditor(new JCheckBox(),delete));
+            table.getColumn("description").setCellRenderer(new ButtonEditRenderer());
             table.getColumn("description").setCellEditor(new ButtonEditEditor(new JCheckBox(), description));
 
-        JTableButtonMouseListener jTableButtonMouseListener = new JTableButtonMouseListener(table);
+                table.getColumn("projectId").setCellRenderer(new RowRenderer());
+                table.getColumn("dateAdded").setCellRenderer(new RowRenderer());
+                table.getColumn("countOfDevelopers").setCellRenderer(new RowRenderer());
+
                 contents = new Box(BoxLayout.Y_AXIS);
         contents.add(new JScrollPane(table));
 
@@ -131,6 +164,7 @@ public class ProjectsPanel extends JPanel {
             row[3] = "edit";
             row[4] = "delete";
             row[5] = "description";
+
             tableModel.addRow(row);
         }
 
@@ -141,6 +175,8 @@ public class ProjectsPanel extends JPanel {
         projectsDtos.add(new ProjectsDto(2,"Hello1",localDateFromString("13-03-2016"), 5));
         projectsDtos.add(new ProjectsDto(3,"Hello2",localDateFromString("14-07-2018"), 7));
         projectsDtos.add(new ProjectsDto(4,"Hello2",localDateFromString("18-07-2018"), 7));
+        projectsDtosTemp = new ArrayList<>();
+        projectsDtosTemp = projectsDtos;
         return projectsDtos;
     }
 
@@ -156,28 +192,6 @@ public class ProjectsPanel extends JPanel {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         String formattedString = date.format(formatter);
         return formattedString;
-    }
-
-    private static class JTableButtonMouseListener extends MouseAdapter {
-        private final JTable table;
-
-        public JTableButtonMouseListener(JTable table) {
-            this.table = table;
-        }
-
-        public void mouseClicked(MouseEvent e) {
-            int column = table.getColumnModel().getColumnIndexAtX(e.getX()); // get the coloum of the button
-            int row    = e.getY()/table.getRowHeight(); //get the row of the button
-
-            /*Checking the row or column is valid or not*/
-            if (row < table.getRowCount() && row >= 0 && column < table.getColumnCount() && column >= 0) {
-                Object value = table.getValueAt(row, column);
-                if (value instanceof JButton) {
-                    /*perform a click event*/
-                    ((JButton)value).doClick();
-                }
-            }
-        }
     }
 
 }

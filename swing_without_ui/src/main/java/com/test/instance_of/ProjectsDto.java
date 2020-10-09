@@ -1,27 +1,22 @@
-package com.test.model;
+package com.test.instance_of;
 
 import java.time.LocalDate;
-import java.util.Set;
 
-public class Projects {
+public class ProjectsDto {
 
-    /**
-     * Constructor without arguments.
-     */
-
-    public Projects() {
+    public ProjectsDto() {
     }
-    public Projects(Integer projectId, String description, LocalDate dateAdded) {
+
+    public ProjectsDto(Integer projectId, String description, LocalDate dateAdded, Integer countOfDevelopers) {
         this.projectId = projectId;
         this.description = description;
         this.dateAdded = dateAdded;
+        this.countOfDevelopers = countOfDevelopers;
     }
-
 
     /**
      * Project id.
      */
-
     private Integer projectId;
 
     /**
@@ -35,11 +30,16 @@ public class Projects {
 
     private LocalDate dateAdded;
 
+    /**
+     * Count of developers.
+     */
+    private Integer countOfDevelopers;
+
     public Integer getProjectId() {
         return projectId;
     }
 
-    public Projects setProjectId(Integer projectId) {
+    public ProjectsDto setProjectId(Integer projectId) {
         this.projectId = projectId;
         return this;
     }
@@ -48,7 +48,7 @@ public class Projects {
         return description;
     }
 
-    public Projects setDescription(String description) {
+    public ProjectsDto setDescription(String description) {
         this.description = description;
         return this;
     }
@@ -57,17 +57,27 @@ public class Projects {
         return dateAdded;
     }
 
-    public Projects setDateAdded(LocalDate dateAdded) {
+    public ProjectsDto setDateAdded(LocalDate dateAdded) {
         this.dateAdded = dateAdded;
+        return this;
+    }
+
+    public Integer getCountOfDevelopers() {
+        return countOfDevelopers;
+    }
+
+    public ProjectsDto setCountOfDevelopers(Integer countOfDevelopers) {
+        this.countOfDevelopers = countOfDevelopers;
         return this;
     }
 
     @Override
     public String toString() {
-        return "Projects{" +
+        return "ProjectsDto{" +
                 "projectId=" + projectId +
                 ", description='" + description + '\'' +
                 ", dateAdded=" + dateAdded +
+                ", countOfDevelopers=" + countOfDevelopers +
                 '}';
     }
 }

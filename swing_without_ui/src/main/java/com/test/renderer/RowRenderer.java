@@ -5,13 +5,11 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 
-public class ButtonEditRenderer extends JButton implements TableCellRenderer {
+public class RowRenderer implements TableCellRenderer {
 
     public static final DefaultTableCellRenderer DEFAULT_RENDERER =
             new DefaultTableCellRenderer();
-    public ButtonEditRenderer() {
-        setOpaque(true);
-    }
+
     public Component getTableCellRendererComponent(JTable table, Object value,
                                                    boolean isSelected, boolean hasFocus, int row, int column) {
 

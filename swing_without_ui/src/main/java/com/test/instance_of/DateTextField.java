@@ -1,4 +1,4 @@
-package com.test.date;
+package com.test.instance_of;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;

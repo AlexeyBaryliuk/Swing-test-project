@@ -38,6 +38,7 @@ public class JDialogTest extends JFrame
         setSize(350, 100);
         setVisible(true);
     }
+
     /** Функция создания диалогового окна.
      * @param title - заголовок окна
      * @param modal - флаг модальности
@@ -46,16 +47,19 @@ public class JDialogTest extends JFrame
     {
         final JDialog dialog = new JDialog(this, title, modal);
         dialog.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        dialog.setSize(180, 90);
-        final JButton button = new JButton("Hello");
+        dialog.setSize(200, 150);
+        JPanel buttonPane = new JPanel();
+        JButton button = new JButton("Close");
+        button.setBackground(Color.GRAY);
+        buttonPane.add(button);
+
+        dialog.add(buttonPane, BorderLayout.PAGE_END);
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                dialog.setTitle("NEW");
-                button.setBackground(Color.black);
+                dialog.setVisible(false);
             }
         });
-        dialog.add(button);
         return dialog;
     }
 
