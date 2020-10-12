@@ -1,4 +1,4 @@
-package com.swing;
+package com.com1;
 
 import javax.swing.*;
 import java.awt.*;
@@ -6,7 +6,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.net.URL;
 
-public class JOptionPaneTest extends JFrame
+public class AddPng extends JFrame
 {
     private static final long serialVersionUID = 1L;
 
@@ -17,7 +17,7 @@ public class JOptionPaneTest extends JFrame
     public static void createGUI()
     {
 
-        final ImageIcon icon = createIcon("img/swing.png");
+        final ImageIcon icon = createIcon("../../img/swing.png");
 
         JFrame frame = new JFrame("Test JOptionPane");
 
@@ -63,8 +63,8 @@ public class JOptionPaneTest extends JFrame
 
     protected static ImageIcon createIcon(String path) {
 
-        URL imgURL = JOptionPaneTest.class.getResource(path);
-        System.out.println("+++++++++" + JOptionPaneTest.class.getResource(path));
+        URL imgURL = AddPng.class.getResource(path);
+        System.out.println("+++++++++" + imgURL);
         if (imgURL != null) {
             return new ImageIcon(imgURL);
         } else {
