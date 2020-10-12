@@ -21,9 +21,8 @@
         </plugins>
     </build>
     <modules>
-        <module>swing_project_test</module>
-        <module>my_project</module>
         <module>swing_without_ui</module>
+        <module>jlable_with_png</module>
     </modules>
 
 

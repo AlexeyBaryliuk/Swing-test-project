@@ -1,5 +1,6 @@
 package com.test.instance_of;
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 public class MyTableModel extends DefaultTableModel {
@@ -15,9 +16,9 @@ public class MyTableModel extends DefaultTableModel {
             Integer.class
             , String.class
             , String.class
-            , Boolean.class
-            , Boolean.class
-            , Boolean.class
+            , JButton.class
+            , JButton.class
+            , JButton.class
     };
     boolean[] canEdit = new boolean[]{
             false, true, false, true, true, true

@@ -32,7 +32,6 @@ public class ProjectsPanel extends JPanel {
     private JButton edit;
     private JButton delete;
     private JButton description;
-    private JLabel footer;
     private JPanel northPanel;
     private Box contents;
     private JPanel header;
@@ -40,7 +39,8 @@ public class ProjectsPanel extends JPanel {
     private JButton add;
     private JButton refresh;
     private JTable table;
-    private JPanel footerPanel;
+    private ProjectsCards parent;
+
     private ArrayList<ProjectsDto> projectsDtosTemp;
 
     public ProjectsPanel(){
@@ -49,15 +49,40 @@ public class ProjectsPanel extends JPanel {
         header = new JPanel();
         filter = new JPanel();
         add = new JButton("Add");
+        add.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                parent = (ProjectsCards) getParent();
+
+                    CardLayout layout = (CardLayout)(parent.getLayout());
+                    layout.show(parent, parent.ADD_PROJECT );
+
+            }
+        });
+
         refresh = new JButton("Refresh");
-        footerPanel = new JPanel();
+        refresh.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                add_row(createObj());
+            }
+        });
+
         edit = new JButton();
+        edit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                parent = (ProjectsCards) getParent();
+
+                CardLayout layout = (CardLayout)(parent.getLayout());
+                layout.show(parent, parent.EDIT_PROJECT);
+            }
+        });
 
         delete = new JButton();
         delete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
                 
             }
         });
@@ -66,14 +91,15 @@ public class ProjectsPanel extends JPanel {
         description.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-int c = 0;
+                int c = 0;
                 String description = null;
                 JPanel textPanel = new JPanel(new FlowLayout());
                 JLabel descriptionLable = new JLabel();
                 textPanel.add(descriptionLable);
+
                 int row = table.getSelectedRow();
                 int projectId = (int)table.getModel().getValueAt(row, 0);
-                System.out.println("ProjectId = " + projectId );
+
                 for (int i = 0; i < createObj().size(); i++) {
                     if (createObj().get(i).getProjectId() == projectId){
                         description =  createObj().get(i).getDescription();
@@ -81,7 +107,7 @@ int c = 0;
 
                         break;
                     }
-                    System.out.println("count" + c);
+
                     c++;
                 }
 
@@ -95,7 +121,7 @@ int c = 0;
 
         table = new JTable();
         table.setModel(model);
-        
+
         table.getColumn("edit").setCellRenderer(new ButtonEditRenderer());
         table.getColumn("edit").setCellEditor(new ButtonEditEditor(new JCheckBox(), edit));
 
@@ -111,11 +137,6 @@ int c = 0;
 
                 contents = new Box(BoxLayout.Y_AXIS);
         contents.add(new JScrollPane(table));
-
-        footer = new JLabel("2020");
-
-        footerPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        footerPanel.add(footer);
 
         setLayout(new BorderLayout());
         northPanel.setLayout(new BorderLayout());
@@ -140,19 +161,17 @@ int c = 0;
         header.add(add);
         header.add(refresh);
 
-//        table.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
         northPanel.add(header, BorderLayout.NORTH);
         northPanel.add(filter, BorderLayout.WEST);
 
         add(contents, BorderLayout.CENTER);
         add(northPanel,BorderLayout.NORTH);
-        add(footerPanel, BorderLayout.SOUTH);
-        add_row();
+        add_row(createObj());
     }
 
 
-    public void add_row(){
-        ArrayList<ProjectsDto> obj = createObj();
+    public void add_row(ArrayList<ProjectsDto> obj){
+
         DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
 
         Object[] row = new Object[6];
